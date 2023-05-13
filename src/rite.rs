@@ -27,5 +27,35 @@ pub struct SectionHeader {
     pub rite_version: Option<[u8; 4]>,
 }
 
-#[derive(Debug)]
-pub struct Irep {}
+#[derive(Debug, Clone)]
+pub struct Irep {
+    pub size: i32,
+    pub nlocals: u16,
+    pub nregs: u16,
+    /* number of child irep, historically called rlen */
+    pub rlen: u16,
+    /* number of catch handler */
+    pub clen: u16,
+    pub ilen: u32,
+
+    pub iseq_bin: Vec<u8>,
+    pub pool: Vec<PoolItem>,
+    pub syms: Vec<Sym>,
+
+    pub children: Vec<Irep>,
+}
+
+#[derive(Debug, Clone)]
+pub enum PoolItem {
+    Str(Vec<u8>),
+    Int32(i32),
+    SStr(&'static str),
+    Int64(i64),
+    Float(f64),
+    BigInt(),
+}
+
+#[derive(Debug, Clone)]
+pub struct Sym {
+    pub name: Vec<u8>,
+}
