@@ -1,0 +1,19 @@
+; very basic mruby asm code example
+!binformat mruby 3
+!begin irep main:
+    LOADI_2       R1      (2)
+    MOVE          R2      R1
+    LOADI_1       R3      (1)
+    GT            R2      R3
+    JMPNOT        R2      else1
+    STRING        R3      "big"
+    SSEND         R2      :puts   1
+    JMP           end1
+else1:
+    STRING        R3      "small"
+    SSEND         R2      :puts   1
+end1:
+    RETURN        R2
+    STOP
+!end
+; to be continued

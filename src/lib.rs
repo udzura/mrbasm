@@ -1,4 +1,5 @@
 pub mod binary;
+pub mod lexer;
 pub mod rite;
 
-pub const compiler_name: [u8; 4] = [b'M', b'A', b'S', b'M'];
+pub const COMPILER_NAME: [u8; 4] = [b'M', b'A', b'S', b'M'];

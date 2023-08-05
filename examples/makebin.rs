@@ -30,5 +30,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let out = fs::File::create("./sample.mrb")?;
 
     bin.write(&out)?;
+
+    eprintln!("binary sample.mrb created");
     return Ok(());
 }

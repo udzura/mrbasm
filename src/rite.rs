@@ -1,6 +1,8 @@
+pub const IDENT: [u8; 4] = [b'R', b'I', b'T', b'E'];
+
 pub mod markers {
-    pub const irep: [u8; 4] = [b'I', b'R', b'E', b'P'];
-    pub const end: [u8; 4] = [b'E', b'N', b'D', 0];
+    pub const IREP: [u8; 4] = [b'I', b'R', b'E', b'P'];
+    pub const END: [u8; 4] = [b'E', b'N', b'D', 0];
 }
 
 #[derive(Debug)]

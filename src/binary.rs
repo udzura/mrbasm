@@ -12,16 +12,16 @@ pub struct Binary {
 impl Binary {
     pub fn new() -> Self {
         let binary_header = rite::BinaryHeader {
-            ident: [b'R', b'I', b'T', b'E'],
+            ident: rite::IDENT,
             major_version: [b'0', b'3'],
             minor_version: [b'0', b'0'],
             size: -1, // marker
-            compiler_name: crate::compiler_name,
+            compiler_name: crate::COMPILER_NAME,
             compiler_version: [b'0', b'0', b'0', b'0'],
         };
         let irep_section = rite::Section {
             header: rite::SectionHeader {
-                ident: rite::markers::irep,
+                ident: rite::markers::IREP,
                 size: -1,
 
                 rite_version: Some([b'0', b'3', b'0', b'0']),
@@ -30,7 +30,7 @@ impl Binary {
         };
         let end_secsion = rite::Section {
             header: rite::SectionHeader {
-                ident: rite::markers::end,
+                ident: rite::markers::END,
                 size: 8,
 
                 rite_version: None,
@@ -58,7 +58,7 @@ impl Binary {
 
         for section in self.sections.iter() {
             match section.header.ident {
-                rite::markers::irep => {
+                rite::markers::IREP => {
                     let h = &section.header;
                     let i = section.body_irep.as_ref().unwrap();
 
@@ -100,7 +100,7 @@ impl Binary {
                         eprintln!("WIP children not supported")
                     }
                 }
-                rite::markers::end => {
+                rite::markers::END => {
                     let h = &section.header;
                     buf.put_slice(&h.ident);
                     buf.put_i32(h.size);
