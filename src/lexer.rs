@@ -8,6 +8,7 @@ pub enum Token {
     Number,
     Reg,
     OpCode,
+    Minus,
     Bang,
     Colon,
     // keywords
@@ -110,10 +111,11 @@ impl<'source> Lexer<'source> {
                     self.advance()?;
                 }
             }
+            '-' => self.push(Minus),
             '!' => self.push(Bang),
             ':' => self.push(Colon),
             'R' => {
-                let peek = self.peek_n(0)?;
+                let peek = self.peek()?;
                 if is_digit(peek) {
                     self.register()?;
                 } else {
@@ -240,7 +242,19 @@ impl<'source> Lexer<'source> {
             self.advance()?;
         }
 
-        self.push(Token::Symbol);
+        let start = self.start;
+        let end = self.current;
+        let text = &self.source[start..end];
+
+        use Token::*;
+        let tok = match text {
+            "binformat" => BinFormat,
+            "begin" => BlkBegin,
+            "end" => BlkEnd,
+            _ => Symbol,
+        };
+
+        self.push(tok);
         Ok(())
     }
 
